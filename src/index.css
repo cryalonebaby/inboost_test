@@ -7,3 +7,25 @@
 	padding: 0;
 	margin: 0;
 }
+
+html {
+	min-width: 330px;
+}
+
+.btn:hover {
+	background-color: #c0c0c0;
+}
+
+@media (max-width: 500px) {
+	.navBar {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.left-side,
+	right-side {
+		width: 100%;
+		margin-bottom: 10px;
+		justify-content: center;
+	}
+}

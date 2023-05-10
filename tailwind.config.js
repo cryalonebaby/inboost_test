@@ -4,7 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        violet: '#7f46f0',
+        navGray: '#DADADA',
+        btnWhite: '#FAFAFA',
+        btnGray: '#9CA3AF',
+        selectedGray: '#E1E1DF',
+        bgGray: '#FAFAF8',
+        primaryBlack: '#222220',
+        infoGray: '#D2D2D2',
       }
     },
   },
