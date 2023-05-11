@@ -1,9 +1,23 @@
 const styles = {
-  navBar: 'flex justify-between items-center bg-navGray fixed top-0 left-0 w-full p-2 shadow-sm',
-  navButtons: 'flex gap-4 h-full',
-  navBtn: 'flex justify-center items-center py-1 px-2 bg-btnWhite shadow-md rounded-sm cursor-pointer',
-  searchWrapper: 'relative flex items-center h-full',
-  searchBox: 'flex justify-center items-center px-12 bg-btnWhite shadow-sm rounded-sm outline-none text-btnGray placeholder:text-center',
+  //* App
+  app: 'h-screen flex flex-col',
+  main: 'flex-1 flex',
+  //* Navbar
+  navBar: 'flex items-center justify-between bg-navGray p-3 shadow-sm shrink-0',
+  navButtons: 'flex h-full gap-4',
+  navBtn: 'flex items-center justify-center py-1 px-2 bg-btnWhite shadow-md rounded-sm cursor-pointer',
+  searchWrapper: 'flex items-center h-full relative',
+  searchBox: 'px-12 py-1 bg-btnWhite shadow-sm rounded-sm outline-none text-btnGray placeholder:text-center',
+  //* Sidebar
+  sideContainer: 'w-[300px] h-full flex flex-col overflow-y-scroll overflow-x-hidden border-r-[1px] border-infoGray',
+  listItem: 'flex items-center h-full cursor-pointer hover:bg-selectedGray border-r-[1px] border-infoGray flex-grow bg-bgGray',
+  listItemContent: 'flex flex-col w-full h-full ml-5 py-3 pr-3 border-b-[1px] border-infoGray text-primaryBlack',
+  itemTitle: 'overflow-hidden text-ellipsis whitespace-nowrap pr-8 font-bold',
+  itemTextContainer: 'flex gap-2',
+  itemText: 'overflow-hidden text-ellipsis whitespace-nowrap flex-grow pr-8 font-light',
+  itemDate: 'flex-shrink-0 flex-grow-0 font-normal',
+  //* Workspace
+  workspace: 'flex-1 flex',
 }
 
 export default styles

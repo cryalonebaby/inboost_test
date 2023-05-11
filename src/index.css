@@ -8,12 +8,30 @@
 	margin: 0;
 }
 
-html {
+html,
+body {
 	min-width: 330px;
+	height: 100%;
+	overflow: hidden;
 }
 
 .btn:hover {
 	background-color: #c0c0c0;
+}
+
+/* 52px its a height of navbar */
+.sideBar {
+	height: calc(100vh - 52px);
+}
+
+.sideBar::-webkit-scrollbar {
+	width: 8px; /* Ширина полосы прокрутки */
+	border-radius: 10px; /* Закругление углов */
+}
+
+.sideBar::-webkit-scrollbar-thumb {
+	background-color: #c0c0c0; /* Цвет полосы прокрутки */
+	border-radius: 3px; /* Закругление углов */
 }
 
 @media (max-width: 500px) {
