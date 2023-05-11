@@ -10,7 +10,7 @@ module.exports = {
         selectedGray: '#E1E1DF',
         bgGray: '#FAFAF8',
         primaryBlack: '#222220',
-        infoGray: '#D2D2D2',
+        infoGray: '#A7A7A5',
       }
     },
   },

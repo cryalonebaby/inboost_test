@@ -17,7 +17,10 @@ const styles = {
   itemText: 'overflow-hidden text-ellipsis whitespace-nowrap flex-grow pr-8 font-light',
   itemDate: 'flex-shrink-0 flex-grow-0 font-normal',
   //* Workspace
-  workspace: 'flex-1 flex',
+  workspaceContainer: 'flex-1 flex bg-bgGray',
+  workspaceContent: 'flex flex-col items-center px-4 py-2 gap-2 w-full h-full',
+  workspaceDate: 'text-infoGray font-medium',
+  workspaceText: 'bg-bgGray text-primaryBlack font-medium h-full w-full outline-none resize-none',
 }
 
 export default styles

@@ -34,6 +34,16 @@ body {
 	border-radius: 3px; /* Закругление углов */
 }
 
+.textSpace::-webkit-scrollbar {
+	width: 8px; /* Ширина полосы прокрутки */
+	border-radius: 10px; /* Закругление углов */
+}
+
+.textSpace::-webkit-scrollbar-thumb {
+	background-color: #c0c0c0; /* Цвет полосы прокрутки */
+	border-radius: 3px; /* Закругление углов */
+}
+
 @media (max-width: 500px) {
 	.navBar {
 		flex-direction: column;
