@@ -1,9 +1,41 @@
-import React, { useEffect, useState, useContext, createContext } from 'react';
+import React, {
+	useEffect,
+	useState,
+	useContext,
+	createContext,
+	useCallback,
+} from 'react';
+
+import {
+	addNoteToDb,
+	getAllNotes,
+	deleteNote,
+	updateNote,
+	getNoteById,
+} from '../utils/indexedDbUtils';
 
 const GlobalContext = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
 	const [db, setDb] = useState(null);
+	const [notes, setNotes] = useState([]);
+	const [selected, setSelected] = useState({
+		id: null,
+		date: null,
+		text: '',
+	});
+	const [editId, setEditId] = useState(0);
+
+	const fetchNotes = useCallback(async () => {
+		try {
+			if (db) {
+				const result = await getAllNotes(db);
+				setNotes(result);
+			}
+		} catch (e) {
+			console.error('Error while getting notes', e);
+		}
+	}, [db]);
 
 	//* Create connection to IndexedDb
 	useEffect(() => {
@@ -33,113 +65,57 @@ export const GlobalContextProvider = ({ children }) => {
 		};
 	}, []);
 
-	//* Function to add the note
-	const addNoteToDb = (note) => {
-		const transaction = db.transaction('notes', 'readwrite');
+	//* Fetch data to state
+	useEffect(() => {
+		fetchNotes();
+	}, [fetchNotes]);
 
-		const store = transaction.objectStore('notes');
-
-		const request = store.add(note);
-
-		request.onsuccess = () => {
-			console.log('Note added successfully', request.result);
-		};
-
-		request.onerror = () => {
-			console.error('Error', request.error);
-		};
+	const handleAddNote = async (note) => {
+		try {
+			if (db) {
+				await addNoteToDb(db, note);
+				fetchNotes();
+			}
+		} catch (e) {
+			console.error('Error while adding note', e);
+		}
 	};
 
-	//* Function to get the note by id
-	const getNoteById = (id) => {
-		const transaction = db.transaction('notes', 'readonly');
-
-		const store = transaction.objectStore('notes');
-		const idRequest = store.get(id);
-
-		idRequest.onerror = () => {
-			console.error(`Error while getting the note by id: ${id}`);
-		};
-
-		idRequest.onsuccess = () => {
-			const result = idRequest.result;
-			console.log('idRequest', result);
-
-			transaction.oncomplete = () => {
-				return result;
-			};
-		};
+	const handleDeleteNote = async (id) => {
+		try {
+			if (db) {
+				await deleteNote(db, id);
+				fetchNotes();
+			}
+		} catch (e) {
+			console.error('Error while deleting note', e);
+		}
 	};
 
-	//* Function to get all notes
-	const getAllNotes = () => {
-		const transaction = db.transaction('notes', 'readonly');
-
-		const store = transaction.objectStore('notes');
-		const allRequest = store.getAll();
-
-		allRequest.onerror = () => {
-			console.error('Error while getting notes');
-		};
-
-		allRequest.onsuccess = () => {
-			const result = allRequest.result;
-			console.log('allRequest', result);
-
-			transaction.oncomplete = () => {
-				return result;
-			};
-		};
-	};
-
-	//* Function to delete the note by id
-	const deleteNoteById = (id) => {
-		const transaction = db.transaction('notes', 'readwrite');
-
-		const store = transaction.objectStore('notes');
-		const deleteRequest = store.delete(id);
-
-		deleteRequest.onerror = () => {
-			console.error(`Error while deleting the note by id: ${id}`);
-		};
-
-		deleteRequest.onsuccess = () => {
-			console.log('Successfully deleted the note by id', id);
-
-			transaction.oncomplete = () => {
-				return id;
-			};
-		};
-	};
-
-	//* Function to delete the note by id
-	const updateNote = (newNote) => {
-		const transaction = db.transaction('notes', 'readwrite');
-
-		const store = transaction.objectStore('notes');
-		const updateRequest = store.put(newNote);
-
-		updateRequest.onerror = () => {
-			console.error('Error while updating the note');
-		};
-
-		updateRequest.onsuccess = () => {
-			console.log('Successfully updated the note', newNote);
-
-			transaction.oncomplete = () => {
-				return newNote;
-			};
-		};
+	const handleUpdateNote = async (newNote) => {
+		try {
+			if (db) {
+				await updateNote(db, newNote);
+				fetchNotes();
+			}
+		} catch (e) {
+			console.error('Error while updating note', e);
+		}
 	};
 
 	return (
 		<GlobalContext.Provider
 			value={{
-				addNoteToDb,
+				notes,
+				selected,
+				setSelected,
+				editId,
+				setEditId,
+				addNoteToDb: handleAddNote,
 				getNoteById,
 				getAllNotes,
-				deleteNoteById,
-				updateNote,
+				deleteNote: handleDeleteNote,
+				updateNote: handleUpdateNote,
 			}}
 		>
 			{children}

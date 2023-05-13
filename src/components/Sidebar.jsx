@@ -1,13 +1,20 @@
 import React from 'react';
 
-import styles from '../styles';
 import ListItem from './ListItem';
 
+import { useGlobalContext } from '../context';
+
+import styles from '../styles';
+
 const Sidebar = () => {
+	const { notes, selected, setSelected } = useGlobalContext();
+
 	return (
 		<div className={`sideBar ${styles.sideContainer}`}>
-			{[...Array(40)].map(() => (
-				<ListItem />
+			{notes.map((elem) => (
+				<div key={elem.id}>
+					<ListItem note={elem} selected={selected} setSelected={setSelected} />
+				</div>
 			))}
 		</div>
 	);

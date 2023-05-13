@@ -1,20 +1,31 @@
 import React from 'react';
 
+import splitText from '../utils/splitTextUtil';
+
+import { getListFormat } from '../utils/dateUtils';
+
 import styles from '../styles';
 
-const ListItem = () => {
+const ListItem = ({ note, selected, setSelected }) => {
+	const isSelected = selected.id === note.id;
+	const { firstParagraph, otherText } = splitText(note.text);
+
+	const noteDate = getListFormat(note.date);
+
+	const handleClick = () => {
+		setSelected(note);
+	};
+
 	return (
-		<div className={styles.listItem}>
+		<div
+			className={`${styles.listItem} ${isSelected && styles.selected}`}
+			onClick={() => handleClick()}
+		>
 			<div className={styles.listItemContent}>
-				<h5 className={styles.itemTitle}>
-					Wow, what a cool note. Wow Wow, what a cool note. Wow
-				</h5>
+				<h5 className={styles.itemTitle}>{firstParagraph}</h5>
 				<div className={styles.itemTextContainer}>
-					<span className={styles.itemDate}>12:17 PM</span>
-					<p className={styles.itemText}>
-						This is an amazing note. This is an amazing note. This is an amazing
-						note. This is an amazing note.
-					</p>
+					<span className={styles.itemDate}>{noteDate}</span>
+					<p className={styles.itemText}>{otherText}</p>
 				</div>
 			</div>
 		</div>

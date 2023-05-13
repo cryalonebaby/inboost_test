@@ -9,13 +9,14 @@ const styles = {
   searchWrapper: 'flex items-center h-full relative',
   searchBox: 'px-12 py-1 bg-btnWhite shadow-sm rounded-sm outline-none text-btnGray placeholder:text-center',
   //* Sidebar
-  sideContainer: 'w-[300px] h-full flex flex-col overflow-y-scroll overflow-x-hidden border-r-[1px] border-infoGray',
-  listItem: 'flex items-center h-full cursor-pointer hover:bg-selectedGray border-r-[1px] border-infoGray flex-grow bg-bgGray',
-  listItemContent: 'flex flex-col w-full h-full ml-5 py-3 pr-3 border-b-[1px] border-infoGray text-primaryBlack',
+  sideContainer: 'w-[300px] flex flex-col overflow-y-scroll overflow-x-hidden border-r-[1px] border-infoGray',
+  listItem: 'flex items-center max-h-[120px] cursor-pointer hover:bg-selectedGray border-r-[1px] border-infoGray flex-grow bg-bgGray',
+  listItemContent: 'flex flex-col w-full ml-5 py-3 pr-3 border-b-[1px] border-infoGray text-primaryBlack',
   itemTitle: 'overflow-hidden text-ellipsis whitespace-nowrap pr-8 font-bold',
   itemTextContainer: 'flex gap-2',
   itemText: 'overflow-hidden text-ellipsis whitespace-nowrap flex-grow pr-8 font-light',
   itemDate: 'flex-shrink-0 flex-grow-0 font-normal',
+  selected: 'bg-selectedGray',
   //* Workspace
   workspaceContainer: 'flex-1 flex bg-bgGray',
   workspaceContent: 'flex flex-col items-center px-4 py-2 gap-2 w-full h-full',
