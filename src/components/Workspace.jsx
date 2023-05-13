@@ -5,6 +5,7 @@ import { useGlobalContext } from '../context';
 import { getFullFormat } from '../utils/dateUtils';
 
 import styles from '../styles';
+import useNotification from '../hooks/useNotification';
 
 const Workspace = () => {
 	const { selected, updateNote, editId, setEditId } = useGlobalContext();
@@ -15,6 +16,8 @@ const Workspace = () => {
 	const isEditingNote = editId === selected.id;
 
 	const fullFormat = getFullFormat(selected.date);
+
+	const { notify } = useNotification();
 
 	const handleChange = (e) => {
 		if (isEditingNote) {
@@ -29,6 +32,7 @@ const Workspace = () => {
 				...selected,
 				text: text,
 			});
+			notify('Successfully saved', { theme: 'colored' });
 		}
 		setEditId(0);
 	};
@@ -51,9 +55,16 @@ const Workspace = () => {
 	return (
 		<div className={styles.workspaceContainer}>
 			<div className={styles.workspaceContent}>
-				<h3 className={styles.workspaceDate}>
-					{fullFormat} {isEditingNote && '(Edit*)'}
-				</h3>
+				{!selected.id ? (
+					<h3 className={styles.workspaceDate}>
+						Choose your note or add new one
+					</h3>
+				) : (
+					<h3 className={styles.workspaceDate}>
+						{fullFormat} {isEditingNote ? '(Edit*)' : '(Readonly)'}
+					</h3>
+				)}
+
 				<textarea
 					className={`textSpace ${styles.workspaceText}`}
 					name="note"

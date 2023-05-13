@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 
+import { useGlobalContext } from '../context';
+
 import styles from '../styles';
 
 const SearchBox = () => {
-	const [search, setSearch] = useState('');
+	const { search, setSearch } = useGlobalContext();
 
 	return (
 		// Wrapper

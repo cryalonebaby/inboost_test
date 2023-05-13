@@ -22,6 +22,8 @@ const styles = {
   workspaceContent: 'flex flex-col items-center px-4 py-2 gap-2 w-full h-full',
   workspaceDate: 'text-infoGray font-medium',
   workspaceText: 'bg-bgGray text-primaryBlack font-medium h-full w-full outline-none resize-none',
+  //* Tooltip
+  tooltip: 'p-1 rounded bg-white-500 absolute top-full mt-2',
 }
 
 export default styles

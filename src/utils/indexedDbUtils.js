@@ -7,7 +7,7 @@ export const addNoteToDb = (db, note) => {
   return new Promise((resolve, reject) => {
     request.onsuccess = () => {
       console.log('Note added successfully', request.result);
-      resolve();
+      resolve(note);
     };
 
     request.onerror = () => {

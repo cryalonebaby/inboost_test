@@ -25,6 +25,7 @@ export const GlobalContextProvider = ({ children }) => {
 		text: '',
 	});
 	const [editId, setEditId] = useState(0);
+	const [search, setSearch] = useState('');
 
 	const fetchNotes = useCallback(async () => {
 		try {
@@ -73,8 +74,10 @@ export const GlobalContextProvider = ({ children }) => {
 	const handleAddNote = async (note) => {
 		try {
 			if (db) {
-				await addNoteToDb(db, note);
+				const newNote = await addNoteToDb(db, note);
 				fetchNotes();
+				setSelected(newNote);
+				setEditId(newNote.id);
 			}
 		} catch (e) {
 			console.error('Error while adding note', e);
@@ -111,6 +114,8 @@ export const GlobalContextProvider = ({ children }) => {
 				setSelected,
 				editId,
 				setEditId,
+				search,
+				setSearch,
 				addNoteToDb: handleAddNote,
 				getNoteById,
 				getAllNotes,

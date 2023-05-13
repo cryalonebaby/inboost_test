@@ -4,6 +4,9 @@ import SearchBox from "./SearchBox";
 import Sidebar from "./Sidebar";
 import Workspace from "./Workspace";
 import Button from "./Button";
+import ConfirmModal from "./ConfirmModal";
+import Tooltip from "./Tooltip";
+import Notification from "./Notification";
 
 export {
   ListItem,
@@ -11,5 +14,8 @@ export {
   SearchBox,
   Sidebar,
   Workspace,
-  Button
+  Button,
+  ConfirmModal,
+  Tooltip,
+  Notification
 }
