@@ -79,40 +79,49 @@ export const GlobalContextProvider = ({ children }) => {
 		fetchNotes();
 	}, [fetchNotes]);
 
-	const handleAddNote = async (note) => {
-		try {
-			if (db) {
-				const newNote = await addNoteToDb(db, note);
-				fetchNotes();
-				setSelected(newNote);
-				setEditId(newNote.id);
+	const handleAddNote = useCallback(
+		async (note) => {
+			try {
+				if (db) {
+					const newNote = await addNoteToDb(db, note);
+					fetchNotes();
+					setSelected(newNote);
+					setEditId(newNote.id);
+				}
+			} catch (e) {
+				console.error('Error while adding note', e);
 			}
-		} catch (e) {
-			console.error('Error while adding note', e);
-		}
-	};
+		},
+		[db, fetchNotes]
+	);
 
-	const handleDeleteNote = async (id) => {
-		try {
-			if (db) {
-				await deleteNote(db, id);
-				fetchNotes();
+	const handleDeleteNote = useCallback(
+		async (id) => {
+			try {
+				if (db) {
+					await deleteNote(db, id);
+					fetchNotes();
+				}
+			} catch (e) {
+				console.error('Error while deleting note', e);
 			}
-		} catch (e) {
-			console.error('Error while deleting note', e);
-		}
-	};
+		},
+		[db, fetchNotes]
+	);
 
-	const handleUpdateNote = async (newNote) => {
-		try {
-			if (db) {
-				await updateNote(db, newNote);
-				fetchNotes();
+	const handleUpdateNote = useCallback(
+		async (newNote) => {
+			try {
+				if (db) {
+					await updateNote(db, newNote);
+					fetchNotes();
+				}
+			} catch (e) {
+				console.error('Error while updating note', e);
 			}
-		} catch (e) {
-			console.error('Error while updating note', e);
-		}
-	};
+		},
+		[db, fetchNotes]
+	);
 
 	return (
 		<GlobalContext.Provider
