@@ -1,96 +1,60 @@
-//* Function to add the note
-export const addNoteToDb = (db, note) => {
-  const transaction = db.transaction('notes', 'readwrite');
-  const store = transaction.objectStore('notes');
-  const request = store.add(note);
-
+//* Function for indexedDB Operations
+const indexedDbTransaction = (db, operation, key, note) => {
   return new Promise((resolve, reject) => {
+    const transaction = db.transaction('notes', 'readwrite');
+    const store = transaction.objectStore('notes');
+    const request = operation === 'add' ? store.add(note) :
+      operation === 'delete' ? store.delete(key) :
+        operation === 'update' ? store.put(note) :
+          operation === 'get' ? store.get(key) :
+            operation === 'getAll' ? store.getAll() : null;
+
+    if (!request) {
+      reject(new Error('Invalid operation'));
+      return;
+    }
+
     request.onsuccess = () => {
-      console.log('Note added successfully', request.result);
-      resolve(note);
+      if (operation === 'add' || operation === 'update') {
+        resolve(key);
+      } else if (operation === 'delete') {
+        resolve();
+      } else if (operation === 'get' || operation === 'getAll') {
+        const result = request.result;
+        resolve(result);
+      }
     };
 
     request.onerror = () => {
-      console.error('Error', request.error);
-      reject(new Error('Error while adding note'));
+      console.error(`Error while proccessing the request`);
+      reject(new Error(`Error while proccessing the request`));
     };
+
+
   })
+}
+
+//* Function to add the note
+export const addNoteToDb = (db, note) => {
+  return indexedDbTransaction(db, 'add', 0, note)
 };
 
 //* Function to delete the note by id
 export const deleteNote = (db, id) => {
-  const transaction = db.transaction('notes', 'readwrite');
-  const store = transaction.objectStore('notes');
-  const deleteRequest = store.delete(id);
-
-  return new Promise((resolve, reject) => {
-    deleteRequest.onsuccess = () => {
-      console.log('Successfully deleted the note by id', id);
-      resolve()
-    };
-
-    deleteRequest.onerror = () => {
-      console.error(`Error while deleting the note by id: ${id}`);
-      reject(new Error('Error while deleting the note'))
-    };
-
-  })
-
+  return indexedDbTransaction(db, 'delete', id, {})
 };
 
 //* Function to delete the note by id
-export const updateNote = (db, newNote) => {
-  const transaction = db.transaction('notes', 'readwrite');
-  const store = transaction.objectStore('notes');
-  const updateRequest = store.put(newNote);
-
-  return new Promise((resolve, reject) => {
-    updateRequest.onsuccess = () => {
-      console.log('Successfully updated the note', newNote);
-      resolve()
-    };
-
-    updateRequest.onerror = () => {
-      console.error('Error while updating the note');
-      reject(new Error('Error while updating the note'))
-    };
-  })
+export const updateNote = (db, note) => {
+  return indexedDbTransaction(db, 'update', 0, note)
 };
 
 //* Function to get all notes
 export const getAllNotes = (db) => {
-  const transaction = db.transaction('notes', 'readonly');
-  const store = transaction.objectStore('notes');
-  const allRequest = store.getAll();
-
-  return new Promise((resolve, reject) => {
-    allRequest.onsuccess = () => {
-      const result = allRequest.result;
-      resolve(result);
-    };
-
-    allRequest.onerror = () => {
-      console.error('Error while getting notes');
-      reject(new Error('Error while getting notes'));
-    };
-  });
+  return indexedDbTransaction(db, 'getAll', 0, {})
 };
 
 //* Function to get the note by id
 export const getNoteById = (db, id) => {
-  const transaction = db.transaction('notes', 'readonly');
-  const store = transaction.objectStore('notes');
-  const idRequest = store.get(id);
-
-  return new Promise((resolve, reject) => {
-    idRequest.onsuccess = () => {
-      const result = idRequest.result;
-      console.log('idRequest', result);
-      resolve(result)
-    };
-
-    idRequest.onerror = () => {
-      console.error(`Error while getting the note by id: ${id}`);
-    };
-  })
+  return indexedDbTransaction(db, 'get', id, {})
 };

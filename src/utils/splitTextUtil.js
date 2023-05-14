@@ -1,6 +1,7 @@
 const splitText = (text) => {
-  const paragraphs = text.split('\n');
-  if (text !== '') {
+  const trimmedText = text.trim();
+  if (trimmedText.length > 0) {
+    const paragraphs = text.split('\n');
     const [firstParagraph, ...otherText] = paragraphs;
     return { firstParagraph, otherText };
   }
