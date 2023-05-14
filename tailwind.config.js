@@ -4,7 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        violet: '#7f46f0',
+        navGray: '#DADADA',
+        btnWhite: '#FAFAFA',
+        btnGray: '#9CA3AF',
+        selectedGray: '#E1E1DF',
+        bgGray: '#FAFAF8',
+        primaryBlack: '#222220',
+        infoGray: '#A7A7A5',
+        red: '#A7003D',
       }
     },
   },
