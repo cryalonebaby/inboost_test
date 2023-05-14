@@ -7,7 +7,7 @@ import { getFullFormat } from '../utils/dateUtils';
 import styles from '../styles';
 import useNotification from '../hooks/useNotification';
 
-const Workspace = () => {
+const Workspace = ({ sideBarOpen }) => {
 	const { selected, updateNote, editId, setEditId } = useGlobalContext();
 
 	const [text, setText] = useState('');

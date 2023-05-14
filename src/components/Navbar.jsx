@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { BiPlusMedical } from 'react-icons/bi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import { BiEdit } from 'react-icons/bi';
+import { BiEdit, BiMenu } from 'react-icons/bi';
 
 import Button from './Button';
 import SearchBox from './SearchBox';
@@ -12,10 +12,10 @@ import { generateEmptyNote } from '../data/templateNote';
 
 import ConfirmModal from './ConfirmModal';
 
-import styles from '../styles';
 import useNotification from '../hooks/useNotification';
+import styles from '../styles';
 
-const Navbar = () => {
+const Navbar = ({ toggleSidebar }) => {
 	const { selected, addNoteToDb, deleteNote, setEditId } = useGlobalContext();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -42,6 +42,11 @@ const Navbar = () => {
 			{/* Buttons Wrapper */}
 			<div className={`left-side ${styles.navButtons}`}>
 				{/* Button */}
+				<MemoizedButton
+					Icon={BiMenu}
+					func={() => toggleSidebar()}
+					tooltip={'Open sidebar'}
+				/>
 				<MemoizedButton
 					Icon={BiPlusMedical}
 					func={() => handleAddNote()}

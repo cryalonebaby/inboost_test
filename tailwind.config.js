@@ -11,6 +11,7 @@ module.exports = {
         bgGray: '#FAFAF8',
         primaryBlack: '#222220',
         infoGray: '#A7A7A5',
+        red: '#A7003D',
       }
     },
   },

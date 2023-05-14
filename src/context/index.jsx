@@ -14,6 +14,8 @@ import {
 	getNoteById,
 } from '../utils/indexedDbUtils';
 
+import { filterListBySearch } from '../utils/filtedListBySearch';
+
 const GlobalContext = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
@@ -26,6 +28,7 @@ export const GlobalContextProvider = ({ children }) => {
 	});
 	const [editId, setEditId] = useState(0);
 	const [search, setSearch] = useState('');
+	const [filteredNotes, setFilteredNotes] = useState([]);
 
 	const fetchNotes = useCallback(async () => {
 		try {
@@ -37,6 +40,11 @@ export const GlobalContextProvider = ({ children }) => {
 			console.error('Error while getting notes', e);
 		}
 	}, [db]);
+
+	useEffect(() => {
+		const filtered = filterListBySearch(notes, search);
+		setFilteredNotes(filtered);
+	}, [notes, search]);
 
 	//* Create connection to IndexedDb
 	useEffect(() => {
@@ -116,6 +124,7 @@ export const GlobalContextProvider = ({ children }) => {
 				setEditId,
 				search,
 				setSearch,
+				filteredNotes,
 				addNoteToDb: handleAddNote,
 				getNoteById,
 				getAllNotes,

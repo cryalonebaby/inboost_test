@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 
@@ -8,6 +8,18 @@ import styles from '../styles';
 
 const SearchBox = () => {
 	const { search, setSearch } = useGlobalContext();
+	const inputRef = useRef(null);
+
+	const handleInputChange = (e) => {
+		const { value } = e.target;
+
+		setSearch(value);
+	};
+
+	//* Fixed lost focus problem
+	useEffect(() => {
+		inputRef.current.focus();
+	}, [search]);
 
 	return (
 		// Wrapper
@@ -21,13 +33,14 @@ const SearchBox = () => {
 			)}
 			{/* SearchBox */}
 			<input
+				ref={inputRef}
 				placeholder="Search"
 				value={search}
 				className={styles.searchBox}
-				onChange={(e) => setSearch(e.target.value)}
+				onChange={handleInputChange}
 			/>
 		</div>
 	);
 };
 
-export default SearchBox;
+export default React.memo(SearchBox);

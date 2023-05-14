@@ -4,6 +4,10 @@ import Modal from 'react-modal';
 import { useGlobalContext } from '../context';
 import useNotification from '../hooks/useNotification';
 
+import { RiCloseFill } from 'react-icons/ri';
+
+import styles from '../styles';
+
 Modal.setAppElement('#root');
 
 const handleModalDelete = (deleteNote, setIsOpen) => {
@@ -27,16 +31,24 @@ const ConfirmModal = ({ isOpen, setIsOpen, deleteNote }) => {
 	};
 
 	return (
-		<Modal isOpen={isOpen} overlayClassName="Overlay">
-			<>
-				<p>Are you sure to delete this note?</p>
-				<button
-					onClick={() => handleModalDelete(handleDeleteActiveNote, setIsOpen)}
-				>
-					Delete
-				</button>
-				<button onClick={() => setIsOpen(false)}>Close</button>
-			</>
+		<Modal
+			className={`${styles.modalContainer} ${styles.glassEffect}`}
+			isOpen={isOpen}
+			overlayClassName="Overlay"
+		>
+			<p className={styles.modalTitle}>Are you sure to delete this note?</p>
+			<button
+				onClick={() => handleModalDelete(handleDeleteActiveNote, setIsOpen)}
+				className={styles.modalButton}
+			>
+				Delete
+			</button>
+			<RiCloseFill
+				size={'30px'}
+				color="#A7003D"
+				className={styles.modalClose}
+				onClick={() => setIsOpen(false)}
+			/>
 		</Modal>
 	);
 };
